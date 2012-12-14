@@ -1,0 +1,19 @@
+{
+    "name": "speroteck/composer-helper",
+    "version": "0.0.1",
+    "dist": {
+        "type": "zip",
+        "url": "http://gitlab.kiev.speroteck.com/speroteck_composer-helper.git"
+    },
+    "source": {
+        "url": "http://gitlab.kiev.speroteck.com/speroteck_composer-helper.git",
+        "type": "git"
+    },
+    "description": "Add more functionality to manage modules development",
+    "authors": [
+        {
+            "name": "Volodymyr Dubyna",
+            "email": "vdubyna@speroteck.com"
+        }
+    ]
+}
