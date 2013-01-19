@@ -27,8 +27,6 @@ class InstallTest extends \PHPUnit_Framework_TestCase
 
     public function testExecute()
     {
-        return $this->markTestIncomplete('Not complete');
-
         // Arrange | Given
         $application = new Application();
         $application->add(new Install());
@@ -38,7 +36,11 @@ class InstallTest extends \PHPUnit_Framework_TestCase
 
         // Act     | When
         $commandTester->execute(
-            array('command' => $command->getName(), 'package' => 'vdubyna/package')
+            array(
+                'command' => $command->getName(),
+                'package' => 'vdubyna/package',
+                '--composer-dir' => __DIR__ . '/fixtures'
+            )
         );
 
         // Assert  | Then
@@ -93,7 +95,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $package->setSourceDirectory(__DIR__ . '/fixtures/vendor/vdubyna/package');
         $expected = array(
             'src/file1.txt' => 'file1.txt',
-            'src/app/file1.txt' => 'app_file1.txt',
+            'src/app/file1.txt' => 'app/file1.txt',
         );
 
         // Act     | When
@@ -108,7 +110,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $package = new Package('vdubyna/package');
         $expected = array(
             'src/file1.txt' => 'file1.txt',
-            'src/app/file1.txt' => 'app_file1.txt',
+            'src/app/file1.txt' => 'app/file1.txt',
         );
         $mapFileName = __DIR__ . '/fixtures/vendor/vdubyna/package/filesmap.json';
         $package->loadFilesMap($mapFileName);
@@ -118,7 +120,32 @@ class InstallTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testCopyFilesToApplication_ShouldReturnTrue()
+    {
+        // Arrange | Given
+        $package = new Package('vdubyna/package');
+        $package->setSourceDirectory(__DIR__ . '/fixtures/vendor/vdubyna/package');
+        $appDir = __DIR__ . '/fixtures';
+        // Act     | When
+        $package->install($appDir);
+        // Assert  | Then
+        $this->assertTrue(file_exists($appDir . '/file1.txt'));
+        $this->assertTrue(file_exists($appDir . '/app/file1.txt'));
+    }
 
 
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //@todo mock filesystem
+        if (file_exists(__DIR__ . '/fixtures/file1.txt')) {
+            unlink(__DIR__ . '/fixtures/file1.txt');
+        }
+        if (is_dir(__DIR__ . '/fixtures/app')) {
+            unlink(__DIR__ . '/fixtures/app/file1.txt');
+            rmdir(__DIR__ . '/fixtures/app');
+        }
+    }
 
 }

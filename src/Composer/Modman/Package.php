@@ -4,6 +4,8 @@
  */
 namespace Composer\Modman;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 class Package
 {
     protected $name;
@@ -11,6 +13,18 @@ class Package
     protected $sourceDirectory;
 
     protected $filesMap;
+
+    protected $composerDir;
+
+    public function setComposerDir($composerDir)
+    {
+        $this->composerDir = $composerDir;
+    }
+
+    public function getComposerDir()
+    {
+        return $this->composerDir;
+    }
 
     public function setFilesMap($filesMap)
     {
@@ -34,7 +48,7 @@ class Package
     public function getSourceDirectory()
     {
         if (empty($this->sourceDirectory)) {
-            $this->sourceDirectory = $this->findComposerDirectory(__DIR__) . '/vendor/' . $this->getName();
+            $this->sourceDirectory = $this->getComposerDir() . '/vendor/' . $this->getName();
         }
 
         return $this->sourceDirectory;
@@ -49,6 +63,16 @@ class Package
                 $startDir = dirname($startDir);
             }
         }
+    }
+
+    public function install($applicationDirectory)
+    {
+        $fs = new Filesystem();
+        foreach ($this->getFilesMap() as $src => $dest) {
+            $fs->copy($this->getSourceDirectory() . "/$src", "$applicationDirectory/$dest", true);
+        }
+
+        return true;
     }
 
     public function setName($name)

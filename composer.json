@@ -3,6 +3,7 @@
     "description": "Modman composer manager",
     "require": {
         "symfony/console": "2.2.x-dev",
+        "symfony/filesystem": "*",
         "composer/composer": "dev-master"
     },
     "keywords": ["composer","modman"],
