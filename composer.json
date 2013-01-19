@@ -20,5 +20,5 @@
             "Composer\\Modman": "src/"
         }
     },
-    "bin": ["bin/magento-cli"]
+    "bin": ["bin/composer-modman"]
 }
