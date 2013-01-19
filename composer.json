@@ -2,7 +2,8 @@
     "name": "vdubyna/composer-modman",
     "description": "Modman composer manager",
     "require": {
-        "symfony/console": "2.2.x-dev"
+        "symfony/console": "2.2.x-dev",
+        "composer/composer": "dev-master"
     },
     "keywords": ["composer","modman"],
     "homepage": "http://vdubyna.github.com/composer-modman/",

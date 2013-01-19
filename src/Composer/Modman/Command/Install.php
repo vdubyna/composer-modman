@@ -18,7 +18,12 @@ class Install extends Command
      */
     protected function configure() {
         $this->setName('install')
-            ->setDescription('Install module into application');
+            ->addArgument(
+                'package',
+                InputArgument::REQUIRED,
+                'Package name to install'
+            )
+            ->setDescription('Install package into application');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
