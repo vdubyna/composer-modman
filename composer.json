@@ -3,7 +3,7 @@
     "description": "Modman composer manager",
     "require": {
         "symfony/console": "*",
-        "symfony/filesystem": "*",
+        "symfony/filesystem": "*"
     },
     "keywords": ["composer","modman"],
     "homepage": "http://vdubyna.github.com/composer-modman/",
