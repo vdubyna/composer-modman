@@ -4,7 +4,6 @@
     "require": {
         "symfony/console": "*",
         "symfony/filesystem": "*",
-        "composer/composer": "dev-master"
     },
     "keywords": ["composer","modman"],
     "homepage": "http://vdubyna.github.com/composer-modman/",
