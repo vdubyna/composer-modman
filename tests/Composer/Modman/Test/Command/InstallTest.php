@@ -37,5 +37,10 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp('/Hello/', $commandTester->getDisplay());
     }
 
+    public function testGetComposerConfiguration()
+    {
+        $this->markTestIncomplete("Not implemented yet");
+    }
+
 
 }
