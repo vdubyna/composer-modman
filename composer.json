@@ -1,19 +1,17 @@
 {
     "name": "vdubyna/composer-modman",
-    "version": "0.0.1",
-    "dist": {
-        "type": "zip",
-        "url": "https://github.com/vdubyna/composer-modman/archive/master.zip"
+    "description": "Modman composer manager",
+    "require": {
+        "symfony/console": "2.2.x-dev"
     },
-    "source": {
-        "url": "https://github.com/vdubyna/composer-modman.git",
-        "type": "git"
-    },
-    "description": "Modman functionality for the modules",
+    "keywords": ["composer","modman"],
+    "homepage": "http://vdubyna.github.com/composer-modman/",
+    "license": "MIT",
     "authors": [
         {
             "name": "Volodymyr Dubyna",
-            "email": "vdubyna@gmail.com"
+            "email": "vovikha@gmail.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev"
 }
