@@ -1,19 +1,19 @@
 {
-    "name": "speroteck/composer-helper",
+    "name": "vdubyna/composer-modman",
     "version": "0.0.1",
     "dist": {
         "type": "zip",
-        "url": "http://gitlab.kiev.speroteck.com/speroteck_composer-helper.git"
+        "url": "https://github.com/vdubyna/composer-modman/archive/master.zip"
     },
     "source": {
-        "url": "http://gitlab.kiev.speroteck.com/speroteck_composer-helper.git",
+        "url": "https://github.com/vdubyna/composer-modman.git",
         "type": "git"
     },
-    "description": "Add more functionality to manage modules development",
+    "description": "Modman functionality for the modules",
     "authors": [
         {
             "name": "Volodymyr Dubyna",
-            "email": "vdubyna@speroteck.com"
+            "email": "vdubyna@gmail.com"
         }
     ]
 }

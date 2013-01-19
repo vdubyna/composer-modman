@@ -10,7 +10,7 @@ Installation
 ------------
 
  1. Install `composer` 
- 2. Add `speroteck/composer-helper` package as required, version dev-master
+ 2. Add `vdubyna/composer-modman` package as required, version dev-master
 
 Usage
 -----
