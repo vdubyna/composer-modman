@@ -4,7 +4,7 @@ Composer Modman
 It was inspired by modman utility written on PHP and adolpted to use as composer package.
 
  * Install modules into existed applications
- * Back the changes from the modules to repository
+ * Back changes from application to package repository
  * It can work with any source while files map exists
 
 Installation
