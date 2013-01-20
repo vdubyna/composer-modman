@@ -28,6 +28,11 @@ class Install extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Composer Directory absolute path'
+            )->addOption(
+                'source-dir',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Package source absolute path'
             )
             ->setDescription('Install package into application');
     }

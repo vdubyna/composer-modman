@@ -1,0 +1,4 @@
+{
+    "src/file1.txt": "file1.txt",
+    "src/app/file1.txt": "app/file1.txt"
+}

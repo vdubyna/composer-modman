@@ -120,7 +120,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testCopyFilesToApplication_ShouldReturnTrue()
+    public function testCopyFilesToApplication_ShouldWork()
     {
         // Arrange | Given
         $package = new Package('vdubyna/package');
@@ -133,6 +133,18 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(file_exists($appDir . '/app/file1.txt'));
     }
 
+    public function testCopyFilesToApplicationFromAnyChildFolder_ShouldWork()
+    {
+        // Arrange | Given
+        $package = new Package('vdubyna/package');
+        $package->setSourceDirectory(__DIR__ . '/fixtures/dev/vendor/vdubyna/package');
+        $appDir = __DIR__ . '/fixtures';
+        // Act     | When
+        $package->install($appDir);
+        // Assert  | Then
+        $this->assertTrue(file_exists($appDir . '/file1.txt'));
+        $this->assertTrue(file_exists($appDir . '/app/file1.txt'));
+    }
 
     public function tearDown()
     {
