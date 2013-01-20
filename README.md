@@ -61,3 +61,5 @@ Planned features
 
  * Support masks for file names in filesmap
  * Default locations (application|package) for most used applications
+ * Validate `filesmap.json`
+ * Uninstall package
