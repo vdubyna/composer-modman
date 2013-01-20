@@ -24,14 +24,14 @@ class Install extends Command
                 InputArgument::REQUIRED,
                 'Package name to install'
             )->addOption(
-                'composer-dir',
+                'application-dir',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Composer Directory absolute path'
+                'Application Directory absolute path'
             )->addOption(
-                'source-dir',
+                'package-dir',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_REQUIRED,
                 'Package source absolute path'
             )
             ->setDescription('Install package into application');
@@ -40,20 +40,18 @@ class Install extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $package = new Package($input->getArgument('package'));
+            $package = new Package(
+                $input->getArgument('package'),
+                $input->getOption('application-dir'),
+                $input->getOption('package-dir')
+            );
 
-            $composerDir = $input->getOption('composer-dir');
-            if (empty($composerDir)) {
-                $composerDir = $package->findComposerDirectory(__DIR__);
-            }
-            $package->setComposerDir($composerDir);
+            $package->install();
 
-            $package->install($composerDir);
             $output->writeln("<info>Package installed</info>");
         } catch (\Exception $e) {
             $output->writeln("<error>Error</error>");
             $output->write($e->getMessage());
         }
-
     }
 }

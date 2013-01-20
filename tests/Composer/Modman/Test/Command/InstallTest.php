@@ -14,18 +14,34 @@ use Composer\Modman\Package;
 /**
  * Install module into application
  *
- * - Find module source dir
- * - Find Application root dir (optional)
- * - Load Files map of the module (find module config)
+ * - Set Package (source) directory and Application (destenation) directory
+ * - Load Files map of the Package
  * - Copy files to application Folder, based on map
- *
  *
  */
 class InstallTest extends \PHPUnit_Framework_TestCase
 {
 
+    public function getApplicationDir()
+    {
+        return __DIR__ . '/fixtures';
+    }
 
-    public function testExecute()
+    public function getPackageDir()
+    {
+        return __DIR__ . '/fixtures/vendor/vdubyna/package';
+    }
+
+    /**
+     * @return \Composer\Modman\Package
+     */
+    public function getPackage()
+    {
+        return new Package('vdubyna/package', $this->getApplicationDir(), $this->getPackageDir());
+    }
+
+
+    public function testWhenExecute_ShouldReturnSuccessMessage()
     {
         // Arrange | Given
         $application = new Application();
@@ -39,7 +55,8 @@ class InstallTest extends \PHPUnit_Framework_TestCase
             array(
                 'command' => $command->getName(),
                 'package' => 'vdubyna/package',
-                '--composer-dir' => __DIR__ . '/fixtures'
+                '--application-dir' => $this->getApplicationDir(),
+                '--package-dir' => $this->getPackageDir(),
             )
         );
 
@@ -47,52 +64,55 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp('/Package installed/', $commandTester->getDisplay());
     }
 
-    public function testInitPackageObjectToManipulate_ShouldReturnPackageObject()
+    public function testWhenInitPackageObjectToManipulate_ShouldReturnPackageObject()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
+        $package = $this->getPackage();
 
         // Act     | When
         // Assert  | Then
         $this->assertInstanceOf('\\Composer\\Modman\\Package', $package);
     }
 
-    public function testGetPackageNameToInstall_ShouldReturnPackageName()
+    public function testWhenGetPackageNameToInstall_ShouldReturnPackageName()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
+        $package = $this->getPackage();
 
         // Act     | When
         // Assert  | Then
         $this->assertEquals('vdubyna/package', $package->getName());
     }
 
-    public function testFindModuleSource_ShouldReturnDirectoryPathToTheModule()
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Package Directory could not be empty
+     */
+    public function testWhenGetEmptyPackageSourceDir_ShouldReturnException()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
-
         // Act     | When
+        $package = new Package('vdubyna/package', $this->getApplicationDir(), '');
         // Assert  | Then
-        $this->assertRegExp('/vendor\/vdubyna\/package/', $package->getSourceDirectory());
     }
 
-    public function testFindComposerRootDirectory_ShouldReturnComposerRootDirectory()
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Application Directory could not be empty
+     */
+    public function testWhenGetEmptyApplicationDirectory_ShouldThrowException()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
-        $startDir = __DIR__ . '/fixtures/vendor/composer/modman/src/Composer/Modman/Command';
-
         // Act     | When
+        $package = new Package('vdubyna/package', '', $this->getPackageDir());
         // Assert  | Then
-        $this->assertEquals(__DIR__ . '/fixtures', $package->findComposerDirectory($startDir));
     }
 
-    public function testGetFilesMapToCopy_ShouldReturnFilesMap()
+    public function testWhenGetFilesMapToCopy_ShouldReturnFilesMap()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
-        $package->setSourceDirectory(__DIR__ . '/fixtures/vendor/vdubyna/package');
+        $package = $this->getPackage();
+
         $expected = array(
             'src/file1.txt' => 'file1.txt',
             'src/app/file1.txt' => 'app/file1.txt',
@@ -103,47 +123,29 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $package->getFilesMap());
     }
 
-
-    public function testLoadFilesMapToCopy_ShouldReturnFilesMapAsArray()
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage There is nothing to install
+     */
+    public function testWhenGetEmptyFilesMapToCopy_ShouldReturnFilesMap()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
-        $expected = array(
-            'src/file1.txt' => 'file1.txt',
-            'src/app/file1.txt' => 'app/file1.txt',
-        );
-        $mapFileName = __DIR__ . '/fixtures/vendor/vdubyna/package/filesmap.json';
-        $package->loadFilesMap($mapFileName);
+        $package = $this->getPackage();
         // Act     | When
+        $package->loadFilesMap(__DIR__ . '/fixtures/vendor/vdubyna/package/emptyfilesmap.json');
         // Assert  | Then
-        $this->assertEquals($expected, $package->getFilesMap());
-
     }
 
-    public function testCopyFilesToApplication_ShouldWork()
-    {
-        // Arrange | Given
-        $package = new Package('vdubyna/package');
-        $package->setSourceDirectory(__DIR__ . '/fixtures/vendor/vdubyna/package');
-        $appDir = __DIR__ . '/fixtures';
-        // Act     | When
-        $package->install($appDir);
-        // Assert  | Then
-        $this->assertTrue(file_exists($appDir . '/file1.txt'));
-        $this->assertTrue(file_exists($appDir . '/app/file1.txt'));
-    }
 
-    public function testCopyFilesToApplicationFromAnyChildFolder_ShouldWork()
+    public function testWhenCopyFilesToApplication_ShouldWork()
     {
         // Arrange | Given
-        $package = new Package('vdubyna/package');
-        $package->setSourceDirectory(__DIR__ . '/fixtures/dev/vendor/vdubyna/package');
-        $appDir = __DIR__ . '/fixtures';
+        $package = $this->getPackage();
         // Act     | When
-        $package->install($appDir);
+        $package->install();
         // Assert  | Then
-        $this->assertTrue(file_exists($appDir . '/file1.txt'));
-        $this->assertTrue(file_exists($appDir . '/app/file1.txt'));
+        $this->assertTrue(file_exists(__DIR__ . '/fixtures/file1.txt'));
+        $this->assertTrue(file_exists(__DIR__ . '/fixtures/app/file1.txt'));
     }
 
     public function tearDown()
@@ -159,5 +161,6 @@ class InstallTest extends \PHPUnit_Framework_TestCase
             rmdir(__DIR__ . '/fixtures/app');
         }
     }
+
 
 }
