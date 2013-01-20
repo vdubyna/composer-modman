@@ -16,11 +16,23 @@ class Package
 
     protected $applicationDir;
 
+    protected $filesmapName = 'filesmap.json';
+
     public function __construct($name, $applicationDir, $packageDir)
     {
         $this->setApplicationDir($applicationDir);
         $this->setPackageDir($packageDir);
         $this->setName($name);
+    }
+
+    public function setFilesmapName($filesmapName)
+    {
+        $this->filesmapName = $filesmapName;
+    }
+
+    public function getFilesmapName()
+    {
+        return $this->filesmapName;
     }
 
     public function setApplicationDir($applicationDir)
@@ -59,7 +71,7 @@ class Package
     public function getFilesMap()
     {
         if (empty($this->filesMap)) {
-            $this->loadFilesMap($this->getPackageDir() . '/filesmap.json');
+            $this->loadFilesMap($this->getPackageDir() . '/' . $this->getFilesmapName());
         }
 
         return $this->filesMap;
@@ -72,6 +84,16 @@ class Package
             $fs->copy(
                 $this->getPackageDir() . "/$src",
                 $this->getApplicationDir() . "/$dest", true);
+        }
+    }
+
+    public function commit()
+    {
+        $fs = new Filesystem();
+        foreach (array_flip($this->getFilesMap()) as $src => $dest) {
+            $fs->copy(
+                $this->getApplicationDir() . "/$src",
+                $this->getPackageDir() . "/$dest", true);
         }
     }
 
