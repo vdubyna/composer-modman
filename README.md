@@ -1,10 +1,11 @@
-Composer helper
+Composer Modman
 ===============
 
-It is created to extend composer functionality. 
+It was inspired by modman utility written on PHP and adolpted to use as composer package.
 
  * Install modules into existed applications
  * Back the changes from the modules to repository
+ * It can work with any source while files map exists
 
 Installation
 ------------
@@ -38,6 +39,22 @@ Update `package` from `application`
     ./vendor/bin/composer-modman commit vdubyna/package
      --application-dir=/absolute/path/to/application
      --package-dir=/absolute/path/to/package
+
+Filesmap
+--------
+
+Describes how to map files of the `package` into `application`. It should be written in `json` format
+and named `filesmap.json`.
+
+Example:
+
+```json
+    {
+        "src/file1.txt": "file1.txt",
+        "src/app/file1.txt": "app/file1.txt"
+    }
+```
+
 
 Planned features
 ----------------

@@ -1,12 +1,13 @@
 {
     "name": "vdubyna/composer-modman",
     "description": "Modman composer manager",
+    "version": "0.1.0",
     "require": {
         "symfony/console": "*",
         "symfony/filesystem": "*"
     },
     "keywords": ["composer","modman"],
-    "homepage": "http://vdubyna.github.com/composer-modman/",
+    "homepage": "https://github.com/vdubyna/composer-modman",
     "license": "MIT",
     "authors": [
         {
