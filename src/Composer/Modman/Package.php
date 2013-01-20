@@ -6,19 +6,20 @@ namespace Composer\Modman;
 
 class Package
 {
-    protected $name;
+    protected $_name;
 
-    protected $packageDir;
+    protected $_packageDir;
 
-    protected $filesMap;
+    protected $_filesMap;
 
-    protected $applicationDir;
+    protected $_applicationDir;
 
-    protected $filesmapName = 'filesmap.json';
+    protected $_filesmapName = 'filesmap.json';
 
-    protected $fsUtil;
+    protected $_fsUtil;
 
-    public function __construct($name, $applicationDir, $packageDir, $filesystem)
+    public function __construct($name, $applicationDir,
+                                $packageDir, $filesystem)
     {
         $this->setApplicationDir($applicationDir);
         $this->setPackageDir($packageDir);
@@ -26,25 +27,31 @@ class Package
         $this->setFsUtil($filesystem);
     }
 
+    /**
+     * @param \Symfony\Component\Filesystem\Filesystem $fsUtil
+     */
     public function setFsUtil($fsUtil)
     {
-        $this->fsUtil = $fsUtil;
+        $this->_fsUtil = $fsUtil;
     }
 
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
     public function getFsUtil()
     {
-        return $this->fsUtil;
+        return $this->_fsUtil;
     }
 
 
     public function setFilesmapName($filesmapName)
     {
-        $this->filesmapName = $filesmapName;
+        $this->_filesmapName = $filesmapName;
     }
 
     public function getFilesmapName()
     {
-        return $this->filesmapName;
+        return $this->_filesmapName;
     }
 
     public function setApplicationDir($applicationDir)
@@ -53,12 +60,12 @@ class Package
             throw new \Exception('Application Directory could not be empty');
         }
 
-        $this->applicationDir = $applicationDir;
+        $this->_applicationDir = $applicationDir;
     }
 
     public function getApplicationDir()
     {
-        return $this->applicationDir;
+        return $this->_applicationDir;
     }
 
     public function setPackageDir($packageDir)
@@ -67,26 +74,28 @@ class Package
             throw new \Exception('Package Directory could not be empty');
         }
 
-        $this->packageDir = $packageDir;
+        $this->_packageDir = $packageDir;
     }
 
     public function getPackageDir()
     {
-        return $this->packageDir;
+        return $this->_packageDir;
     }
 
     public function setFilesMap($filesMap)
     {
-        $this->filesMap = $filesMap;
+        $this->_filesMap = $filesMap;
     }
 
     public function getFilesMap()
     {
-        if (empty($this->filesMap)) {
-            $this->loadFilesMap($this->getPackageDir() . '/' . $this->getFilesmapName());
+        if (empty($this->_filesMap)) {
+            $this->loadFilesMap(
+                $this->getPackageDir() . '/' . $this->getFilesmapName()
+            );
         }
 
-        return $this->filesMap;
+        return $this->_filesMap;
     }
 
     public function install()
@@ -95,7 +104,8 @@ class Package
         foreach ($this->getFilesMap() as $src => $dest) {
             $fs->copy(
                 $this->getPackageDir() . "/$src",
-                $this->getApplicationDir() . "/$dest", true);
+                $this->getApplicationDir() . "/$dest", true
+            );
         }
     }
 
@@ -105,23 +115,24 @@ class Package
         foreach (array_flip($this->getFilesMap()) as $src => $dest) {
             $fs->copy(
                 $this->getApplicationDir() . "/$src",
-                $this->getPackageDir() . "/$dest", true);
+                $this->getPackageDir() . "/$dest", true
+            );
         }
     }
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->_name = $name;
     }
 
     public function getName()
     {
-        return $this->name;
+        return $this->_name;
     }
 
     public function loadFilesMap($mapFilename)
     {
-        $content = file_get_contents($mapFilename);
+        $content  = file_get_contents($mapFilename);
         $filesMap = json_decode($content, true);
 
         if (empty($filesMap)) {

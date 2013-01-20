@@ -14,7 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Install module into application
  *
- * - Set Package (source) directory and Application (destenation) directory
+ * - Set Package (source) directory and Application (destination) directory
  * - Load Files map of the Package
  * - Copy files to application Folder, based on map
  *
@@ -47,16 +47,16 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
         $application->add(new Install());
 
-        $command = $application->find('install');
+        $command       = $application->find('install');
         $commandTester = new CommandTester($command);
 
         // Act     | When
         $commandTester->execute(
             array(
-                'command' => $command->getName(),
-                'package' => 'vdubyna/package',
+                'command'           => $command->getName(),
+                'package'           => 'vdubyna/package',
                 '--application-dir' => $this->getApplicationDir(),
-                '--package-dir' => $this->getPackageDir(),
+                '--package-dir'     => $this->getPackageDir(),
             )
         );
 
@@ -114,7 +114,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $package = $this->getPackage();
 
         $expected = array(
-            'src/file1.txt' => 'file1.txt',
+            'src/file1.txt'     => 'file1.txt',
             'src/app/file1.txt' => 'app/file1.txt',
         );
 

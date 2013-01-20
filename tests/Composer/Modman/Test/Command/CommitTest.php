@@ -51,16 +51,16 @@ class CommitTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
         $application->add(new Commit());
 
-        $command = $application->find('commit');
+        $command       = $application->find('commit');
         $commandTester = new CommandTester($command);
 
         // Act     | When
         $commandTester->execute(
             array(
-                'command' => $command->getName(),
-                'package' => 'vdubyna/package',
+                'command'           => $command->getName(),
+                'package'           => 'vdubyna/package',
                 '--application-dir' => $this->getApplicationDir(),
-                '--package-dir' => $this->getPackageDir(),
+                '--package-dir'     => $this->getPackageDir(),
             )
         );
 

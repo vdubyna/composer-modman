@@ -18,7 +18,8 @@ class Install extends Command
     /**
      * Configure command, set parameters definition and help.
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('install')
             ->addArgument(
                 'package',
@@ -34,8 +35,7 @@ class Install extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Package source absolute path'
-            )
-            ->setDescription('Install package into application');
+            )->setDescription('Install package into application');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

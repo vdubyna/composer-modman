@@ -23,24 +23,26 @@ class Commit extends Command
     /**
      * Configure command, set parameters definition and help.
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('commit')
             ->addArgument(
-            'package',
-            InputArgument::REQUIRED,
-            'Package name to commit'
-        )->addOption(
-            'application-dir',
-            null,
-            InputOption::VALUE_REQUIRED,
-            'Application Directory absolute path'
-        )->addOption(
-            'package-dir',
-            null,
-            InputOption::VALUE_REQUIRED,
-            'Package source absolute path'
-        )
-            ->setDescription('Commit package changes from application into package');
+                'package',
+                InputArgument::REQUIRED,
+                'Package name to commit'
+            )->addOption(
+                'application-dir',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Application Directory absolute path'
+            )->addOption(
+                'package-dir',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Package source absolute path'
+            )->setDescription(
+                'Commit package changes from application into package'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
