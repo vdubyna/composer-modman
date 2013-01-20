@@ -30,15 +30,11 @@ See full list of commands
 
 Install `package` into `application`
 
-    ./vendor/bin/composer-modman install vdubyna/package
-     --application-dir=/absolute/path/to/application
-     --package-dir=/absolute/path/to/package
+    ./vendor/bin/composer-modman install package_name --application-dir=/absolute/path/to/application --package-dir=/absolute/path/to/package
 
 Update `package` from `application`
 
-    ./vendor/bin/composer-modman commit vdubyna/package
-     --application-dir=/absolute/path/to/application
-     --package-dir=/absolute/path/to/package
+    ./vendor/bin/composer-modman commit package_name --application-dir=/absolute/path/to/application --package-dir=/absolute/path/to/package
 
 Filesmap
 --------
