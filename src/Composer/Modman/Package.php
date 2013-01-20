@@ -4,8 +4,6 @@
  */
 namespace Composer\Modman;
 
-use Symfony\Component\Filesystem\Filesystem;
-
 class Package
 {
     protected $name;
@@ -18,12 +16,26 @@ class Package
 
     protected $filesmapName = 'filesmap.json';
 
-    public function __construct($name, $applicationDir, $packageDir)
+    protected $fsUtil;
+
+    public function __construct($name, $applicationDir, $packageDir, $filesystem)
     {
         $this->setApplicationDir($applicationDir);
         $this->setPackageDir($packageDir);
         $this->setName($name);
+        $this->setFsUtil($filesystem);
     }
+
+    public function setFsUtil($fsUtil)
+    {
+        $this->fsUtil = $fsUtil;
+    }
+
+    public function getFsUtil()
+    {
+        return $this->fsUtil;
+    }
+
 
     public function setFilesmapName($filesmapName)
     {
@@ -79,7 +91,7 @@ class Package
 
     public function install()
     {
-        $fs = new Filesystem();
+        $fs = $this->getFsUtil();
         foreach ($this->getFilesMap() as $src => $dest) {
             $fs->copy(
                 $this->getPackageDir() . "/$src",
@@ -89,7 +101,7 @@ class Package
 
     public function commit()
     {
-        $fs = new Filesystem();
+        $fs = $this->getFsUtil();
         foreach (array_flip($this->getFilesMap()) as $src => $dest) {
             $fs->copy(
                 $this->getApplicationDir() . "/$src",

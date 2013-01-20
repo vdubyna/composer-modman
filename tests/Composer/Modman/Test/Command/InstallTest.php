@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Composer\Modman\Command\Install;
 use Composer\Modman\Package;
-
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Install module into application
@@ -37,7 +37,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
      */
     public function getPackage()
     {
-        return new Package('vdubyna/package', $this->getApplicationDir(), $this->getPackageDir());
+        return new Package('vdubyna/package', $this->getApplicationDir(), $this->getPackageDir(), new Filesystem());
     }
 
 
@@ -92,7 +92,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
     {
         // Arrange | Given
         // Act     | When
-        $package = new Package('vdubyna/package', $this->getApplicationDir(), '');
+        $package = new Package('vdubyna/package', $this->getApplicationDir(), '', new Filesystem());
         // Assert  | Then
     }
 
@@ -104,7 +104,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
     {
         // Arrange | Given
         // Act     | When
-        $package = new Package('vdubyna/package', '', $this->getPackageDir());
+        $package = new Package('vdubyna/package', '', $this->getPackageDir(), new Filesystem());
         // Assert  | Then
     }
 

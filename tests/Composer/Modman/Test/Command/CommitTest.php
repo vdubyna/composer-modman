@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Composer\Modman\Command\Commit;
 use Composer\Modman\Package;
-
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Install module into application
@@ -37,7 +37,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function getPackage()
     {
-        $package = new Package('vdubyna/package', $this->getApplicationDir(), $this->getPackageDir());
+        $package = new Package('vdubyna/package', $this->getApplicationDir(), $this->getPackageDir(), new Filesystem());
         $package->setFilesmapName('commitfilesmap.json');
 
         return $package;

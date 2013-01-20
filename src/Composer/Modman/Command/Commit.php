@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Composer\Modman\Package;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Commit extends Command
 {
@@ -48,7 +49,8 @@ class Commit extends Command
             $package = new Package(
                 $input->getArgument('package'),
                 $input->getOption('application-dir'),
-                $input->getOption('package-dir')
+                $input->getOption('package-dir'),
+                new Filesystem()
             );
 
             $package->commit();
