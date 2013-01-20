@@ -9,8 +9,7 @@ namespace Composer\Modman;
 /**
  * Manage Package Install|Update
  *
- * @todo Maybe Extract "Package Manager" from the class to follow SOLID principles
- *
+ * @todo Maybe Extract "Package Manager" from the class
  *
  */
 class Package
