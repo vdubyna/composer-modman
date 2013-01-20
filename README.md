@@ -19,7 +19,7 @@ CI status
 
 [See more info on Travis CI](https://travis-ci.org/vdubyna/composer-modman)
 
-[![Build Status](https://travis-ci.org/vdubyna/composer-modman.png?branch=master)](undefined)
+[![Build Status](https://travis-ci.org/vdubyna/composer-modman.png?branch=master)](https://travis-ci.org/vdubyna/composer-modman)
 
 Usage
 -----
