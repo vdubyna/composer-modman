@@ -1,9 +1,18 @@
 <?php
 /**
+ *
  * @author vovikha@gmail.com
  */
+
 namespace Composer\Modman;
 
+/**
+ * Manage Package Install|Update
+ *
+ * @todo Maybe Extract "Package Manager" from the class to follow SOLID principles
+ *
+ *
+ */
 class Package
 {
     protected $_name;
@@ -18,6 +27,15 @@ class Package
 
     protected $_fsUtil;
 
+    /**
+     *
+     * @todo Maybe Replace $filesystem with interface
+     *
+     * @param $name
+     * @param $applicationDir
+     * @param $packageDir
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     */
     public function __construct($name, $applicationDir,
                                 $packageDir, $filesystem)
     {
@@ -28,76 +46,8 @@ class Package
     }
 
     /**
-     * @param \Symfony\Component\Filesystem\Filesystem $fsUtil
+     * Copy changes from Package to Application
      */
-    public function setFsUtil($fsUtil)
-    {
-        $this->_fsUtil = $fsUtil;
-    }
-
-    /**
-     * @return \Symfony\Component\Filesystem\Filesystem
-     */
-    public function getFsUtil()
-    {
-        return $this->_fsUtil;
-    }
-
-
-    public function setFilesmapName($filesmapName)
-    {
-        $this->_filesmapName = $filesmapName;
-    }
-
-    public function getFilesmapName()
-    {
-        return $this->_filesmapName;
-    }
-
-    public function setApplicationDir($applicationDir)
-    {
-        if (empty($applicationDir)) {
-            throw new \Exception('Application Directory could not be empty');
-        }
-
-        $this->_applicationDir = $applicationDir;
-    }
-
-    public function getApplicationDir()
-    {
-        return $this->_applicationDir;
-    }
-
-    public function setPackageDir($packageDir)
-    {
-        if (empty($packageDir)) {
-            throw new \Exception('Package Directory could not be empty');
-        }
-
-        $this->_packageDir = $packageDir;
-    }
-
-    public function getPackageDir()
-    {
-        return $this->_packageDir;
-    }
-
-    public function setFilesMap($filesMap)
-    {
-        $this->_filesMap = $filesMap;
-    }
-
-    public function getFilesMap()
-    {
-        if (empty($this->_filesMap)) {
-            $this->loadFilesMap(
-                $this->getPackageDir() . '/' . $this->getFilesmapName()
-            );
-        }
-
-        return $this->_filesMap;
-    }
-
     public function install()
     {
         $fs = $this->getFsUtil();
@@ -109,6 +59,9 @@ class Package
         }
     }
 
+    /**
+     * Copy changes from Application to Package
+     */
     public function commit()
     {
         $fs = $this->getFsUtil();
@@ -120,16 +73,10 @@ class Package
         }
     }
 
-    public function setName($name)
-    {
-        $this->_name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->_name;
-    }
-
+    /**
+     * @param $mapFilename
+     * @throws \Exception
+     */
     public function loadFilesMap($mapFilename)
     {
         $content  = file_get_contents($mapFilename);
@@ -140,5 +87,150 @@ class Package
         }
 
         $this->setFilesMap($filesMap);
+    }
+
+    /**
+     * @todo Maybe Replace with interface
+     *
+     * @param \Symfony\Component\Filesystem\Filesystem $fsUtil
+     */
+    public function setFsUtil($fsUtil)
+    {
+        $this->_fsUtil = $fsUtil;
+    }
+
+    /**
+     * @todo Maybe Replace with interface
+     *
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    public function getFsUtil()
+    {
+        return $this->_fsUtil;
+    }
+
+    /**
+     * @param $filesmapName
+     * @return \Composer\Modman\Package
+     */
+    public function setFilesmapName($filesmapName)
+    {
+        $this->_filesmapName = $filesmapName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilesmapName()
+    {
+        return $this->_filesmapName;
+    }
+
+    /**
+     * @todo Replace with own Exception class
+     * @todo Maybe move validation to Getter
+     *
+     * @param $applicationDir
+     * @throws \Exception
+     * @return \Composer\Modman\Package
+     */
+    public function setApplicationDir($applicationDir)
+    {
+        if (empty($applicationDir)) {
+            throw new \Exception('Application Directory could not be empty');
+        }
+
+        $this->_applicationDir = $applicationDir;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationDir()
+    {
+        return $this->_applicationDir;
+    }
+
+    /**
+     * @todo Replace with own Exception class
+     * @todo Maybe move validation to Getter
+     *
+     * @param string $packageDir
+     * @throws \Exception
+     * @return \Composer\Modman\Package
+     */
+    public function setPackageDir($packageDir)
+    {
+        if (empty($packageDir)) {
+            throw new \Exception('Package Directory could not be empty');
+        }
+
+        $this->_packageDir = $packageDir;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPackageDir()
+    {
+        return $this->_packageDir;
+    }
+
+    /**
+     * Set Files Map
+     *
+     * @param array $filesMap
+     * @return \Composer\Modman\Package
+     */
+    public function setFilesMap(array $filesMap)
+    {
+        $this->_filesMap = $filesMap;
+
+        return $this;
+    }
+
+    /**
+     * Get Files Map
+     *
+     * @return array
+     */
+    public function getFilesMap()
+    {
+        if (empty($this->_filesMap)) {
+            $this->loadFilesMap(
+                $this->getPackageDir() . '/' . $this->getFilesmapName()
+            );
+        }
+
+        return $this->_filesMap;
+    }
+
+    /**
+     * Set Package name
+     *
+     * @param string $name
+     * @return \Composer\Modman\Package
+     */
+    public function setName($name)
+    {
+        $this->_name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Package name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
     }
 }
