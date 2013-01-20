@@ -7,4 +7,4 @@ before_script:
   - phpenv rehash
 script:
   - phpunit
-  - phpcs --standard=Zend
+  - phpcs --standard=Zend ./src
