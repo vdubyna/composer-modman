@@ -1,0 +1,528 @@
+{
+	"info": {
+		"_postman_id": "924c3407-debc-41ad-a08d-0857cc8bc0e6",
+		"name": "Toyota REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "1121582-924c3407-debc-41ad-a08d-0857cc8bc0e6"
+	},
+	"item": [
+		{
+			"name": "Get all orders",
+			"id": "501c6ab6-4110-4b08-a8c0-30230426b96a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}rest/default/V1/orders?searchCriteria=",
+					"host": [
+						"{{baseUrl}}rest"
+					],
+					"path": [
+						"default",
+						"V1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders with filter",
+			"id": "1fdacab4-8824-492a-ac5f-a387eac93cf0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://shop-uat.toyota-europe.com/rest/default/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=toyotatm@yopmail.com&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc",
+					"protocol": "https",
+					"host": [
+						"shop-uat",
+						"toyota-europe",
+						"com"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][field]",
+							"value": "customer_email"
+						},
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][value]",
+							"value": "toyotatm@yopmail.com"
+						},
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][condition_type]",
+							"value": "eq"
+						},
+						{
+							"key": "searchCriteria[sortOrders][0][field]",
+							"value": "entity_id"
+						},
+						{
+							"key": "searchCriteria[sortOrders][0][direction]",
+							"value": "desc"
+						},
+						{
+							"key": "searchCriteria[pageSize]",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "searchCriteria[currentPage]",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update LOS order",
+			"id": "a478d6cd-3764-498e-81c8-57259d8b85b6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"leadId\": \"test lead 2\",\n    \"uuid\": \"test uuid 2\",\n    \"reservationId\": \"res1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/rest/default/V1/order/4120/lead",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"order",
+						"4120",
+						"lead"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update order",
+			"id": "f1fd56b1-4e4e-40a7-8f04-494080be77a7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"vehicle_status\": 2\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/rest/default/V1/order/4000002450/update",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"order",
+						"4000002450",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update order address check",
+			"id": "b6a4c53f-f9b7-495a-aeae-05f548d6bdc1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"entity\": {\n    \"address_type\": \"shipping\",\n    \"city\": \"speroteck\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/rest/default/V1/orders/2179/update",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"orders",
+						"2179",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get order by id",
+			"id": "3fd6bf90-9b98-4a6b-9a61-8228a7f98ec5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"leadId\": \"test lead 2\",\n    \"uuid\": \"test uuid 2\",\n    \"reservationId\": \"res1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/rest/default/V1/order/4120/lead",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"order",
+						"4120",
+						"lead"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rest/all/V1/integration/admin/token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b945086-f89e-4232-991c-1bb547ca9935",
+						"exec": [
+							"let response = pm.response.json();",
+							"console.log(response)",
+							"let adminToken = response;",
+							"pm.collectionVariables.set(\"adminToken\", adminToken);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "4a88bb5e-c22f-465b-a7e6-9854c989cfa8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/rest/all/V1/integration/admin/token",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"rest",
+						"all",
+						"V1",
+						"integration",
+						"admin",
+						"token"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "10665",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders",
+			"id": "427c263e-a9d7-44bd-8649-b55b28674027",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://toyota.local/rest/default/V1/orders?searchCriteria=",
+					"protocol": "http",
+					"host": [
+						"toyota",
+						"local"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders with filter",
+			"id": "3728ebd9-1207-462b-ba0e-5908ae48f6a9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlLocal}}/rest/default/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=guest_toyota@yopmail.com&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc&searchCriteria[pageSize]=1",
+					"host": [
+						"{{baseUrlLocal}}"
+					],
+					"path": [
+						"rest",
+						"default",
+						"V1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][field]",
+							"value": "customer_email"
+						},
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][value]",
+							"value": "guest_toyota@yopmail.com"
+						},
+						{
+							"key": "searchCriteria[filter_groups][0][filters][0][condition_type]",
+							"value": "eq"
+						},
+						{
+							"key": "searchCriteria[sortOrders][0][field]",
+							"value": "entity_id"
+						},
+						{
+							"key": "searchCriteria[sortOrders][0][direction]",
+							"value": "desc"
+						},
+						{
+							"key": "searchCriteria[pageSize]",
+							"value": "1"
+						},
+						{
+							"key": "searchCriteria[currentPage]",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{adminToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2b3b6d88-8eca-4942-866e-f0f9cb9c1b94",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8bf3c9fe-1dc2-48d4-9a81-c6186b1e2719",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "9ddb2d06-6567-4c7e-9f61-f4899953f1b7",
+			"key": "baseUrl",
+			"value": "https://shop-uat.toyota-europe.com",
+			"type": "string"
+		},
+		{
+			"id": "097e5f96-f45b-4209-8cb9-083b3a52bc12",
+			"key": "adminToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "8183ebae-2929-4fd6-a79b-51e3064c157f",
+			"key": "username",
+			"value": "volodymyr.dubyna@capgemini.com",
+			"type": "string"
+		},
+		{
+			"id": "04f1a1e1-6a2f-4f5e-9a45-ccded9e65358",
+			"key": "password",
+			"value": "Qwer1234!",
+			"type": "string"
+		},
+		{
+			"id": "591d3d31-a3b6-4fdd-87d1-9dc381791519",
+			"key": "baseUrlLocal",
+			"value": "https://app.toyota-pilot.test/",
+			"type": "string"
+		}
+	]
+}
